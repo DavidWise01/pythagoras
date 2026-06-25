@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pythagoras — number, proof, and the first crisis</title>
+<meta name="description" content="LOGIKĒ · the front (c. 570–495 BCE) — Pythagoras and the brotherhood. They held that number is the substance of reality, found the whole-number ratios behind musical harmony (octave 2:1, fifth 3:2), and — fatally for their creed — produced the first famous proof by CONTRADICTION: that √2 cannot be any ratio of whole numbers. The reductio that broke the cult is the deductive move at the heart of logic. Live: step the √2 irrationality proof and the rational approximations that never arrive, and the consonant musical ratios. Honest: Pythagoras left no writings, the theorem was known earlier, and the irrationality discovery is credited to Hippasus. David Lee Wise, two-layer honest.">
+<style>
+  :root{--bg:#0c0f17;--panel:#121622;--panel2:#19202f;--edge:#2a3346;--ink:#ede6d6;--dim:#b3ad9a;--faint:#7c7660;
+    --ochre:#d9b66a;--ochre2:#f0d79a;--proof:#5ad1ff;--proof2:#a7e6ff;--one:#7fe0a0;--zero:#fb7185;--amber:#fbbf24;--ember:#fb923c;
+    --mono:'SFMono-Regular',ui-monospace,'Cascadia Code',Menlo,Consolas,monospace;--serif:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;}
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--serif);line-height:1.58;background-image:radial-gradient(1100px 560px at 75% -10%,#1c2436 0%,transparent 55%),radial-gradient(900px 500px at 0% 100%,#14110a 0%,transparent 55%);}
+  .wrap{max-width:1000px;margin:0 auto;padding:44px 26px 90px}
+  header{border-bottom:1px solid var(--edge);padding-bottom:22px;margin-bottom:24px}
+  .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--ochre);opacity:.95}
+  h1{font-family:Georgia,serif;font-size:38px;line-height:1.08;margin:.3em 0 .14em;font-weight:600}h1 em{color:var(--ochre2);font-style:italic}
+  .who{font-family:var(--mono);font-size:12px;color:var(--faint);letter-spacing:.04em}
+  .sub{color:var(--dim);font-size:16px;max-width:74ch;margin-top:14px}.sub b{color:var(--ink)}
+  .verdicts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:22px 0}@media(max-width:720px){.verdicts{grid-template-columns:1fr}}
+  .vc{border:1px solid var(--edge);border-radius:11px;padding:13px 15px;border-top-width:3px;background:rgba(18,22,34,.6)}
+  .vc .badge{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.12em}
+  .vc.s{border-top-color:var(--one)}.vc.s .badge{color:var(--one)} .vc.m{border-top-color:var(--amber)}.vc.m .badge{color:var(--amber)} .vc.f{border-top-color:var(--ember)}.vc.f .badge{color:var(--ember)}
+  .vc p{font-size:12px;color:var(--dim);margin:6px 0 0;line-height:1.45}.vc p b{color:var(--ink)}
+  section{margin:36px 0}
+  h2{font-size:13px;font-family:var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--ochre2);border-left:2px solid var(--ochre);padding-left:11px;margin:0 0 6px}
+  .lede{color:var(--dim);font-size:15px;margin:0 0 18px;max-width:80ch}
+  .panel{background:linear-gradient(180deg,var(--panel),#0a0d14);border:1px solid var(--edge);border-radius:14px;padding:20px;box-shadow:0 24px 60px -40px #000}
+  .controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}
+  button{font-family:var(--mono);font-size:12px;color:var(--ink);background:#1a2030;border:1px solid var(--edge);border-radius:8px;padding:8px 12px;cursor:pointer}button:hover{background:#222b3e;border-color:var(--ochre)}
+  button.on{border-color:var(--ochre);background:#2a2414;color:var(--ochre2)}
+  .steps{font-family:var(--mono);font-size:13.5px;line-height:1.9}
+  .stp{display:flex;gap:10px;padding:4px 0;opacity:.25;transition:opacity .3s}
+  .stp.show{opacity:1}.stp .n{color:var(--ochre);width:20px}.stp .t{color:var(--dim)}.stp .t b{color:var(--ink)}
+  .stp.kill .t{color:var(--zero)}
+  .approx{border-collapse:collapse;font-family:var(--mono);font-size:12.5px;margin-top:10px;width:100%;max-width:420px}
+  .approx th,.approx td{border:1px solid var(--edge);padding:5px 9px;text-align:center;color:var(--dim)}
+  .approx th{color:var(--ochre)}.approx td.sq{color:var(--proof2)}
+  .note{color:var(--dim);font-size:13.5px;border-left:2px solid var(--edge);padding-left:13px;margin:16px 0 0}.note b{color:var(--ink)}
+  .ratios{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+  .rat{border:1px solid var(--edge);border-radius:10px;padding:11px 14px;background:rgba(0,0,0,.16);cursor:pointer;text-align:center;min-width:96px}
+  .rat:hover{border-color:var(--ochre)}.rat.on{border-color:var(--proof);box-shadow:0 0 0 1px var(--proof) inset}
+  .rat .rr{font-family:var(--mono);font-size:18px;color:var(--ochre2)}.rat .rn{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:4px}
+  .string{margin-top:14px}
+  .thm{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}@media(max-width:620px){.thm{grid-template-columns:1fr}}
+  .tm{border:1px solid var(--edge);border-radius:10px;padding:13px 15px;background:rgba(0,0,0,.14)}.tm b{color:var(--ochre2);font-family:var(--mono);font-size:11px}.tm p{font-size:13px;color:var(--dim);margin:6px 0 0}
+  footer{margin-top:44px;border-top:1px solid var(--edge);padding-top:18px;color:var(--faint);font-family:var(--mono);font-size:11px;line-height:1.7}
+  footer a,.bar2 a{color:var(--ochre)}.bar2{font-family:var(--mono);font-size:11.5px;margin-bottom:16px}.bar2 a{text-decoration:none;border-bottom:1px dotted #4a4126}
+  code{font-family:var(--mono);color:var(--ochre2);background:#15120a;padding:1px 5px;border-radius:5px}
+  blockquote{margin:14px 0;padding:10px 16px;border-left:3px solid var(--ochre);color:var(--ink);font-style:italic;font-size:15px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="bar2"><a href="https://davidwise01.github.io/ud0/">◄ UD0</a> &nbsp; <a href="https://davidwise01.github.io/thales-of-miletus/">← Thales</a> &nbsp; LOGIKĒ · the front</div>
+<header>
+  <div class="kicker">LOGIKĒ · the front · between Thales and Aristotle</div>
+  <h1><em>Pythagoras</em> &amp; the Brotherhood</h1>
+  <div class="who">c. 570 – 495 BCE · Samos &amp; Croton · the Pythagorean order · "all is number"</div>
+  <div class="sub">[[thales-of-miletus]] proved the first theorem; Pythagoras and his secretive brotherhood made <b>proof a way of life</b> — and staked everything on a creed: that <b>number</b>, and specifically the <em>whole numbers and their ratios</em>, is the hidden substance of reality. They had real evidence: pluck a string, halve it, and it sounds an <b>octave</b> — musical harmony <em>is</em> whole-number ratio. But the same devotion to proof produced the discovery that destroyed the creed: a clean <b>reductio ad absurdum</b> showing that the diagonal of a unit square, <b>√2</b>, can be <em>no ratio of whole numbers at all</em>. The first famous proof by contradiction — the deductive engine of all logic — and it broke the people who found it.</div>
+</header>
+<div class="verdicts">
+  <div class="vc s"><span class="badge">✓ STRONG</span><p><b>Real, and pivotal.</b> The irrationality of √2 is a genuine theorem and one of the earliest proofs by contradiction; the whole-number ratios of musical consonance are real; and the cult of proof shaped Greek mathematics permanently.</p></div>
+  <div class="vc m"><span class="badge">◐ THE MAN IS A FOG</span><p><b>Almost nothing is firsthand.</b> Pythagoras left no writings; "Pythagoras" means the brotherhood as much as the man. The theorem named for him was known to Babylonians a millennium earlier; the irrationality proof is credited to <em>Hippasus</em>.</p></div>
+  <div class="vc f"><span class="badge">◔ MYSTICISM, NOT JUST MATH</span><p><b>A religion with theorems.</b> Number-worship, transmigration of souls, dietary taboos, secrecy. The brotherhood reportedly suppressed the irrationality result because it shattered their doctrine — proof used, then feared.</p></div>
+</div>
+
+<section>
+  <h2>I · √2 — the proof that broke the cult</h2>
+  <p class="lede">Their creed: every length is a ratio of whole numbers. The diagonal of a square of side 1 has length √2. <em>Suppose</em> it were a fraction p/q in lowest terms — and follow the logic. Step through the argument; each line forces the next, until the assumption collapses into a flat contradiction. This is <b>reductio ad absurdum</b>: assume, derive nonsense, conclude the assumption was impossible.</p>
+  <div class="panel">
+    <div class="controls"><button id="step">next step ▸</button><button id="reset">reset ↺</button></div>
+    <div class="steps" id="steps"></div>
+    <table class="approx" id="approx"></table>
+    <div class="note">No fraction works — and the rational approximations confirm it: they crowd toward √2 forever and never land on it (their squares approach 2 but never equal it). The diagonal and the side are <b>incommensurable</b> — they share no common unit, however small. ⚑ This is the first great proof by contradiction, the move [[chrysippus]] would formalise, [[kurt-godel]] and [[georg-cantor]] would wield, and every mathematician still lives by.</div>
+  </div>
+  <blockquote>"There is geometry in the humming of the strings; there is music in the spacing of the spheres." <span style="color:var(--faint);font-style:normal;font-size:12px">— attributed to the Pythagoreans</span></blockquote>
+</section>
+
+<section>
+  <h2>II · Why a string sings in whole numbers</h2>
+  <p class="lede">The evidence <em>for</em> the creed is real and beautiful. Stop a vibrating string at a simple fraction of its length and the two notes are <b>consonant</b> — and the simpler the ratio, the sweeter the harmony. Pick a ratio; see the lengths and the interval it names.</p>
+  <div class="panel">
+    <div class="ratios" id="ratios"></div>
+    <svg class="string" id="str" viewBox="0 0 520 90" width="520" height="90"></svg>
+    <div class="note" id="rnote">Octave 2:1, fifth 3:2, fourth 4:3 — the consonances of every musical tradition are the <em>simplest whole-number ratios</em>. The Pythagoreans heard, correctly, that harmony is arithmetic. ⚑ Their mistake wasn't the music — it was the leap that <em>everything</em> must be a clean ratio. √2 was the counterexample hiding in their own square, and finding it took the very tool — proof — they had taught the world to trust.</div>
+  </div>
+</section>
+
+<section>
+  <h2>III · The brotherhood, the theorem, the drowning</h2>
+  <div class="thm">
+    <div class="tm"><b>NUMBER AS REASON</b><p>The conviction that reality has a rational, mathematical structure accessible to proof. Wrong in its literal cult form, right as the founding faith of mathematical science.</p></div>
+    <div class="tm"><b>THE FIRST CONTRADICTION-PROOF</b><p>√2's irrationality: assume it's a ratio, derive that both terms are even though the fraction was in lowest terms — impossible. Reductio, the spine of deduction.</p></div>
+  </div>
+  <p class="note" style="border-color:var(--amber);margin-top:16px"><b style="color:var(--amber)">Gate kept on.</b> Here the two layers must be held apart cleanly. The <b>mathematics is real</b>: the irrationality of √2 is a correct, profound theorem and among the first proofs by contradiction; the whole-number ratios of consonance are genuine; and the Pythagorean insistence that nature is mathematically intelligible became the working faith of all of physics. But the <b>history is fog and legend</b>: Pythagoras wrote nothing, so "he" is inseparable from a secretive brotherhood that attributed all its findings back to the founder; the "Pythagorean theorem" (a²+b²=c²) was used by Babylonian scribes over a thousand years before him; and the irrationality discovery is traditionally credited not to Pythagoras but to <b>Hippasus of Metapontum</b> — whom legend says the brotherhood drowned at sea for revealing that the cosmos contained a number their doctrine forbade. Strip the myth and a hard truth remains: a community devoted to proof followed its own method to a conclusion it could not bear, and the tool was stronger than the creed. ⚑ That is exactly why proof belongs at the front of this lineage. [[thales-of-miletus]] ← · next → Parmenides.</p>
+</section>
+
+<footer>
+  PYTHAGORAS &amp; THE BROTHERHOOD · LOGIKĒ · the front · two-layer honest<br>
+  live √2 reductio (assume p/q lowest terms → both even → contradiction; rational approximations crowd √2 but never land, verified) · the consonant whole-number ratios (octave 2:1, fifth 3:2, fourth 4:3)<br>
+  number as the substance of reality · musical harmony = ratio · the first famous proof by contradiction (irrationality of √2) · incommensurability<br>
+  ← <a href="https://davidwise01.github.io/thales-of-miletus/">Thales</a> · next → <b>Parmenides</b> (deduction over the senses)<br>
+  LOGIKĒ · the lineage of logical mathematics · governor David Lee Wise · CC-BY-ND-4.0
+</footer>
+</div>
+<script>
+"use strict";
+// ---------- MODULE I : √2 reductio + approximations ----------
+(function(){
+  const $=id=>document.getElementById(id);
+  const STEPS=[
+    ['1','Assume √2 = <b>p/q</b> in lowest terms (no common factor).',0],
+    ['2','Then p² = 2q², so <b>p² is even</b> — therefore <b>p is even</b>: p = 2k.',0],
+    ['3','Substitute: (2k)² = 2q² → 4k² = 2q² → <b>q² = 2k²</b>, so q² is even — therefore <b>q is even</b>.',0],
+    ['4','But now <b>p and q are both even</b> — they share the factor 2.',0],
+    ['5','That contradicts "lowest terms." So no such p/q exists: <b>√2 is irrational.</b>',1]
+  ];
+  let n=0;
+  function render(){
+    $('steps').innerHTML=STEPS.map((s,i)=>'<div class="stp'+(i<n?' show':'')+(s[2]&&i<n?' kill':'')+'"><span class="n">'+s[0]+'</span><span class="t">'+s[1]+'</span></div>').join('');
+    // approximations table (best rational approximations of √2 via continued fraction convergents)
+    const conv=[[1,1],[3,2],[7,5],[17,12],[41,29],[99,70]];
+    let h='<tr><th>p/q</th><th>value</th><th>(p/q)²</th></tr>';
+    conv.forEach(([p,q])=>{ h+='<tr><td>'+p+'/'+q+'</td><td>'+(p/q).toFixed(6)+'</td><td class="sq">'+((p*p)/(q*q)).toFixed(6)+'</td></tr>'; });
+    h+='<tr><td style="color:var(--ochre2)">√2</td><td style="color:var(--ochre2)">1.414214…</td><td style="color:var(--ochre2)">2 (never reached)</td></tr>';
+    $('approx').innerHTML=h;
+  }
+  $('step').onclick=()=>{ if(n<STEPS.length)n++; render(); };
+  $('reset').onclick=()=>{ n=0; render(); };
+  render();
+})();
+
+// ---------- MODULE II : musical ratios ----------
+(function(){
+  const $=id=>document.getElementById(id);
+  const R=[['2:1','octave',2,1],['3:2','fifth',3,2],['4:3','fourth',4,3],['5:4','major third',5,4],['9:8','whole tone',9,8]];
+  let cur=0; let actx=null;
+  function play(a,b){
+    try{ actx=actx||new (window.AudioContext||window.webkitAudioContext)(); const base=261.63;
+      [base, base*a/b].forEach((f,i)=>{ const o=actx.createGain(); o.gain.value=0.0001; const osc=actx.createOscillator(); osc.type='sine'; osc.frequency.value=f; osc.connect(o); o.connect(actx.destination); const t=actx.currentTime; o.gain.exponentialRampToValueAtTime(0.12,t+0.03); o.gain.exponentialRampToValueAtTime(0.0001,t+1.1); osc.start(t); osc.stop(t+1.15); });
+    }catch(e){}
+  }
+  function draw(){
+    $('ratios').innerHTML=R.map((r,i)=>'<div class="rat'+(i===cur?' on':'')+'" data-i="'+i+'"><div class="rr">'+r[0]+'</div><div class="rn">'+r[1]+'</div></div>').join('');
+    $('ratios').querySelectorAll('.rat').forEach(e=>e.onclick=()=>{cur=+e.dataset.i; draw(); play(R[cur][2],R[cur][3]);});
+    const [rr,nm,a,b]=R[cur];
+    const W=520, x0=20, full=W-40;
+    const stop=full*(b/a); // the shorter sounding length as fraction
+    let s='';
+    s+='<line x1="'+x0+'" y1="30" x2="'+(x0+full)+'" y2="30" stroke="#3a4660" stroke-width="3"/>';
+    s+='<text x="'+(x0+full/2)+'" y="20" text-anchor="middle" font-family="monospace" font-size="11" fill="#7c7660">whole string</text>';
+    s+='<line x1="'+x0+'" y1="62" x2="'+(x0+stop)+'" y2="62" stroke="#d9b66a" stroke-width="4"/>';
+    s+='<line x1="'+(x0+stop)+'" y1="52" x2="'+(x0+stop)+'" y2="72" stroke="#f0d79a" stroke-width="2"/>';
+    s+='<text x="'+(x0+stop/2)+'" y="86" text-anchor="middle" font-family="monospace" font-size="11" fill="#f0d79a">'+b+'/'+a+' of the length → the '+nm+'</text>';
+    $('str').innerHTML=s;
+    $('rnote').firstChild&&0;
+  }
+  draw();
+})();
+</script>
+</body>
+</html>
